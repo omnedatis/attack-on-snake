@@ -1,0 +1,78 @@
+
+.row {
+  display: flex;
+  flex-direction: row;
+  flex-grow: 1;
+  justify-content: center;
+  align-items: center;
+  resize: none;
+  --clr:#fff
+}
+.col {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  justify-content: center;
+  align-items: center;
+  resize: none;
+  --clr:#fff
+}
+.mid {
+  flex-grow: var(--mid-ratio);
+}
+
+h1 .row {
+  text-align: center;
+  font-size: large;
+  font-weight: 200;
+}
+.togglemeter {
+  position:absolute; 
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  text-align: start;
+  padding-left: 15px;
+  padding-right: 15px;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+  border-right: #c2c2c1;
+  border-right-style: solid;
+  border-right-width: 1px;
+  left: -30vh; 
+  height:100vh; 
+  width:30vh;
+  transition: left 1s;
+}
+.togglemeter.translated{
+  left:0;
+  transition: 1s;
+}
+.grid {
+  background-color: #fff;
+  flex-grow: 1;
+}
+.snake{
+  background-color: #2ab853;
+  border-color: #2ab853;
+  border-radius: 2px;
+}
+.head{
+  background-color: #2ab853;
+  border-color: #2ab853;
+  border-radius: 10px;
+}
+.wall{
+  background-color:#c2c2c1;
+  border-color: #c2c2c1;
+}
+.apple{
+  background-color:red;
+  border-color: red;
+  border-radius: 5px;
+}
+.rock{
+  background-color:gray;
+  border-color: gray;
+  border-radius: 3px; 
+}
