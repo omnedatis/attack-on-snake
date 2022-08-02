@@ -110,7 +110,7 @@ export default function Home(props) {
       <GameOverDialog OverDialogOn={OverDialogOn} setOverDialogOn={setOverDialogOn} setGameId={setGameId} gameId={gameId} boardStates={boardStates} />
       <div style={{ position: 'relative' }}>
         <GameMeter name={meterName.join(" ")} gameSettings={gameSettings} />
-        <div className={[styles.mid, styles.col].join(" ")} style={{ textAlign: "center", position: 'absolute', left: 0, right: 0, marginLeft: 'auto', marginRight: 'auto', alignItems: 'stretch' }}>
+        <div className={[styles.mid, styles.col].join(" ")} style={{ textAlign: "center", position: 'absolute', left: 0, right: 0, marginLeft: 'auto', marginRight: 'auto', alignItems: 'stretch', zIndex:1 }}>
           <h1>Welcome to snake</h1>
           <h2 style={{ marginTop: 0 }}>Your Score: {boardStates.current?.getScore()}</h2>
           <div className={[styles.mid, styles.col].join(" ")} style={{ alignItems: 'center', flexGrow: 1.5 }}>

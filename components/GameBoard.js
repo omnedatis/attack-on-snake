@@ -123,7 +123,7 @@ const GameBoard = forwardRef((props, ref) => {
     //local states
     const [appleCoordinate, setAppleCoordinate] = useState(appleStart);
     const [snakeCoordinates, setSnakeCoordinates] = useState([snakeStart]);
-    const [rockCoordinates, setrockCoordinates] = useState(rocksStart);
+    const [rockCoordinates, setRockCoordinates] = useState(rocksStart);
     const [bombCoordinate, setBombCoordinate] = useState(undefined);
     const [score, setScore] = useState(0);
     const [count, setCount] = useState(1); //delay instant generation
@@ -168,11 +168,7 @@ const GameBoard = forwardRef((props, ref) => {
                 } else if (newCoordinate === bombCoordinate) {
                     setIsGameOver(true);
                     return
-                } else if (busted.some(ele => snakeCoordinates.includes(ele))) {
-                    setIsGameOver(true);
-                    return
-                }
-                
+                } 
                 if (newCoordinate === appleCoordinate) {
                     newcoordinates.unshift(newCoordinate);
                     setSnakeCoordinates(newcoordinates);
@@ -187,32 +183,31 @@ const GameBoard = forwardRef((props, ref) => {
                 setCount((count + 1) % cycle)
 
                 if ((count % genRockPeriod) === 0) {
-                    const newRockCoordinate = rockCoordinates.slice();
-                    if (newRockCoordinate.length > rockNumber) {
-                        console.log('pop')
-                        newRockCoordinate.pop()
+                    const newRockCoordinates = rockCoordinates.slice();
+                    if (newRockCoordinates.length > rockNumber) {
+                        newRockCoordinates.pop();
                     } else {
 
-                        const gen = randomInteger(1, 3)
+                        const gen = randomInteger(1, 3);
                         if (gen === 1) {
-                            newRockCoordinate.unshift('')
+                            newRockCoordinates.unshift('');
                         } else {
                             const front1 = snakeGo(snakeCoordinates[0], snakeDirection);
                             const front2 = snakeGo(front1, snakeDirection);
                             const newRock = getEmptyCoordinate(newcoordinates.concat([appleCoordinate, front1, front2], rockCoordinates), boardSize)
-                            newRockCoordinate.unshift(newRock);
+                            newRockCoordinates.unshift(newRock);
                         }
-                        if (newRockCoordinate.length > rockNumber) {
-                            newRockCoordinate.pop()
+                        if (newRockCoordinates.length > rockNumber) {
+                            newRockCoordinates.pop()
                         }
                     }
 
-                    setrockCoordinates(newRockCoordinate)
+                    setRockCoordinates(newRockCoordinates)
                 }
 
                 if ((count % genBombperiod) === 0) {
-                    const front1 = snakeGo(snakeCoordinates[0], snakeDirection)
-                    const front2 = snakeGo(front1, snakeDirection)
+                    const front1 = snakeGo(snakeCoordinates[0], snakeDirection);
+                    const front2 = snakeGo(front1, snakeDirection);
                     const newBomb = getEmptyCoordinate(newcoordinates.concat([appleCoordinate, front1, front2], rockCoordinates), boardSize);
                     setBombCoordinate(newBomb);
                 }
@@ -233,6 +228,36 @@ const GameBoard = forwardRef((props, ref) => {
         }, delay)
         return () => clearInterval(t)
     });
+    useEffect(e => {
+        if (busted === undefined) return
+        let snakebreak= Infinity, newApple = false;
+        const newSnakeCoordinates = snakeCoordinates.slice();
+        const newRockCoordinates = rockCoordinates.slice();
+        for (const each of busted) {
+            if (newSnakeCoordinates.indexOf(each) > 0){
+                snakebreak = Math.min(newSnakeCoordinates.indexOf(each), snakebreak);
+            }
+            
+            newApple = newApple || each === appleCoordinate;
+            const rockBusted  = newRockCoordinates.indexOf(each)
+            if (rockBusted > 0 ) {
+                newRockCoordinates.splice(rockBusted, 1)
+            }
+        }
+        // snake update
+        if (snakebreak === 0){
+            setIsGameOver(true);
+            return
+        } else if (snakebreak !== Infinity) {
+            setSnakeCoordinates(newSnakeCoordinates.slice(0, snakebreak));
+            setScore(parseInt(score/2));
+        }
+        // apple update
+        const dum = newApple && setAppleCoordinate(getEmptyCoordinate(snakeCoordinates.concat(rockCoordinates), boundNumber - 1));
+        
+        // rock update
+        setRockCoordinates(newRockCoordinates);
+    }, [busted])
     useEffect(e => {
         if (direction !== undefined) {
             if (snakeGo(snakeCoordinates[0], direction) === snakeCoordinates[1]) return;

@@ -56,7 +56,7 @@ export default function GameMeter(props) {
   function valuetext(value) {
     return `${value}°C`;
   }
-  return (<div className={name} style={{ zIndex: 1 }} >
+  return (<div className={name} style={{ zIndex: 4, opacity:1, backgroundColor:'#fff'}} >
     <h3>Teleport mode</h3>
     <Switch autoFocus={true} checked={teleportOK} onChange={() => setTeleportOK(!teleportOK)} />
     <h3>Rock number</h3>
