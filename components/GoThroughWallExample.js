@@ -4,7 +4,6 @@ import GameBoard from "./GameBoard";
 export default function GoThrouhghWallExample(props) {
   const reRender = props.reRender
   const boardSize = 4;
-  const delay = 200;
   const snakeStart = '1_1';
   const rocksStart = [];
   const appleStart = '3_1';
@@ -33,6 +32,5 @@ export default function GoThrouhghWallExample(props) {
   snakeStart={snakeStart}
   appleStart={appleStart}
   rocksStart={rocksStart}
-  delay={delay} 
   frame={{width:"200px"}}/>
 }

@@ -12,7 +12,7 @@ export default function GameMeter(props) {
     boardSize,
     setBoardSize,
     delay,
-    setDelay
+    setSpeed
   } = props.gameSettings;
   const rockHandleChange = function (e) {
     const value = parseInt(e.target.value)
@@ -35,23 +35,7 @@ export default function GameMeter(props) {
     }
   }
   const delayHandleChange = function (e, value) {
-    let ret = delay;
-    switch (value) {
-      case 1:
-        ret = 200;
-        break;
-      case 2:
-        ret = 150;
-        break;
-      case 3:
-        ret = 100;
-        break;
-      case 4:
-        ret = 50;
-      default:
-        break;
-    }
-    setDelay(ret)
+    setSpeed(value)
   }
   function valuetext(value) {
     return `${value}°C`;

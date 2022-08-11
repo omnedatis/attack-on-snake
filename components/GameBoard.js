@@ -97,6 +97,12 @@ const bust = function (loc) {
     }
     return ret
 }
+const speedMap = new Map([
+    [1, 200],
+    [2, 150],
+    [3, 100],
+    [4, 50]
+])
 const GameBoard = forwardRef((props, ref) => {
 
     // props
@@ -107,7 +113,7 @@ const GameBoard = forwardRef((props, ref) => {
     const appleStart = props.appleStart
     const rocksStart = props.rocksStart ?? [];
     const teleportOK = props.teleportOK ?? true;
-    const delay = props.delay ?? 200;
+    const speed = props.speed ?? 1;
     const rockNumber = props.rockNumber ?? 3;
     const boardSize = props.boardSize ?? 20;
     const boundNumber = boardSize + 1;
@@ -225,7 +231,7 @@ const GameBoard = forwardRef((props, ref) => {
                     }
                 }
             }
-        }, delay)
+        }, speedMap.get(speed))
         return () => clearInterval(t)
     });
     useEffect(e => {

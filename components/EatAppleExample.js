@@ -4,7 +4,6 @@ import GameBoard from "./GameBoard";
 export default function EatAppleExample(props) {
     const reRender = props.reRender
     const boardSize = 4;
-    const delay = 200;
     const snakeStart = '1_1';
     const appleStart = '3_2';
     const [direction, setDirection] = useState(undefined);
@@ -29,7 +28,6 @@ export default function EatAppleExample(props) {
     snakeDirection={direction}
     snakeStart={snakeStart}
     appleStart={appleStart}
-    delay={delay} 
     frame={{ width:"200px"}}/>
 }
 
