@@ -65,7 +65,7 @@ export default function Home(props) {
     ['ArrowRight', 'ArrowRight']
   ]);
   const boardStates = useRef();
-  const forceUpdate = useForceUpdate()
+  const forceUpdate = useForceUpdate();
   const gameSettings = {
     teleportOK,
     setTeleportOK,
@@ -91,10 +91,10 @@ export default function Home(props) {
     }
   }
   const handleClick = e => setDirection(undefined);
-  const helpHandleClick = e => setHelpDialogOn(true)
-  const rankHandleClick = e => setRankDialogOn(true)
+  const helpHandleClick = e => setHelpDialogOn(true);
+  const rankHandleClick = e => setRankDialogOn(true);
   const meterHandleClick = e => {
-    setIsTranslate(!isTranslated)
+    setIsTranslate(!isTranslated);
   }
   const boardListener = async (id) => {
     let refresh = false;
@@ -109,7 +109,7 @@ export default function Home(props) {
         refresh = true;
       }
       if (refresh) {
-        forceUpdate()
+        forceUpdate();
       }
       const dum = await new Promise(r => setTimeout(r, 100)).then(d => d);
       refresh = false;
@@ -119,14 +119,14 @@ export default function Home(props) {
   //effects
   useEffect(e => {
     if (isTranslated) {
-      setMeterName([styles.togglemeter, styles.translated])
+      setMeterName([styles.togglemeter, styles.translated]);
     } else {
       setMeterName([styles.togglemeter]);
     }
   }, [isTranslated])
   useEffect(() => {
     boardListener(1)
-    document.getElementById("game-convas").focus()
+    document.getElementById("game-convas").focus();
   }, [])
 
   return (
@@ -182,22 +182,3 @@ export async function getServerSideProps(){
   const ranks = await readRank()
   return {props:{ranks:ranks}}
 }
-// export async function getServerSideProps() {
-//   const pixelNumber = 20;
-//   const snakeStart = `${randomInteger(1, pixelNumber)}_${randomInteger(1, pixelNumber)}`;
-//   const appleStart = getEmptyCoordinate([snakeStart], pixelNumber);
-//   const allowedDirections = new Map([
-//     ['ArrowDown', 'ArrowDown'],
-//     ['ArrowUp', 'ArrowUp'],
-//     ['ArrowLeft', 'ArrowLeft'],
-//     ['ArrowRight', 'ArrowRight']
-//   ]);
-//   return {
-//     props: {
-//       snakeStart: snakeStart,
-//       appleStart: appleStart,
-//       pixelNumber: pixelNumber,
-//       allowedDirections: JSON.stringify(Object.fromEntries(allowedDirections))
-//     }
-//   }
-// }

@@ -11,15 +11,13 @@ export default function RankDialog (props) {
   const columns = ranks.columns.map(e=>{
     return e
   })
-  const rows = ranks.data.map((e, idx)=>{
+  const rows = ranks.data.map((e, idx) => {
+    e.teleportOK = e.teleportOK ? 'Yes' : 'No'
     return {"id":idx, ...e}
   })
-  // const rankBlocks = ranks.map((value ,idx)=>{
-  //   return <div key={idx} >{value.name}</div>
-  // })
   return <Dialog open={rankDialogOn} onClose={e => setRankDialogOn(false)}>
-    <div style={{ height: 400, width: '100%', padding:"10px" }}>
-      <DataGrid columns={columns} rows={rows}/>
+    <div style={{ height: '60vmin', width: '70vmin', padding:"10px" }}>
+      <DataGrid columns={columns} rows={rows} pageSize={10} rowsPerPageOptions={[5, 10, 20]}/>
     </div>
   </Dialog>
 }
