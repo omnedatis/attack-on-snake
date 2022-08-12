@@ -28,12 +28,18 @@ export default function GameOverDialog(props) {
     const [text, setText] = useState('');
 
     const submitHandleClick = (e) => {
-        fetcher('api/editRank', {"score":boardStates.current?.getScore(), "name":text, ...playerSettings})
+        fetcher('api/editRank', {"score":boardStates.current?.getScore(), "name":text, ...playerSettings});
+        setOverDialogOn(false)
+        setGameId(gameId + 1);
+        boardStates.current?.setIsGameOver(false);
+        setText('')
+        router.push('/snake')
     }
     const handleClose = function () {
         setOverDialogOn(false);
         setGameId(gameId + 1);
         boardStates.current?.setIsGameOver(false);
+        setText('')
         router.push('/snake')
 
     }
@@ -47,7 +53,7 @@ export default function GameOverDialog(props) {
                 Please Enter Your Name:
             </h2>
             <TextField placeholder='your name' value={text} onChange={e => setText(e.target.value)} variant="standard" ref={fieldValue} />
-            <Button variant="outlined" onClick={submitHandleClick} style={{ margin: "20px", color: "#a2a2a2", borderColor: "#a2a2a2" }}>submit</Button>
+            <Button variant="outlined" onClick={submitHandleClick} style={{ margin: "20px", color: "#000", borderColor: "#a2a2a2" }}>Submit</Button>
         </div>
     </Dialog>
 
